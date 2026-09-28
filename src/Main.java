@@ -4,5 +4,6 @@ import Assembler.Assembler;
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 void main() {
 
-    Assembler.AssemblyToMachineCode("src/Input/Test1.txt","src/Output/outtest.txt");
+   Assembler.AssemblyToMachineCode("src/Input/Test1.txt","src/Output/outtest.txt");
+    Assembler.AssemblyToMachineCode("src/Input/Mul_test.txt","src/Output/Mul_Out.txt");
 }

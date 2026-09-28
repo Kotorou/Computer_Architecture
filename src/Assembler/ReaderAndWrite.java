@@ -16,7 +16,8 @@ public class ReaderAndWrite {
         try (BufferedReader reader = new BufferedReader(new FileReader(inputPath))) {
             String line = "";
             while ((line = reader.readLine()) != null) {
-                code.add(line);
+                if(!line.isEmpty()){
+                code.add(line);}
             }
 
         } catch (Exception e) {

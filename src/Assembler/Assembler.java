@@ -28,8 +28,7 @@ public class Assembler {
             if (assembly.instruction.equals(".fill")) {
                 if (addresses.containsKey(assembly.field0)) {
                     machineCode.add(assignment.get(assembly.label));
-                } else
-                    machineCode.add(assembly.field0);
+                } else machineCode.add(assembly.field0);
                 continue;
             }
 
@@ -67,7 +66,8 @@ public class Assembler {
                         } else {
                             field2 = addresses.get(assembly.field2);
                         }
-                    } else throw new SyntaxError("label unidentified");
+                    } else
+                        throw new SyntaxError("label unidentified");
                 } else {
                     Validator.registerValidate(assembly.field2);
                     field2 = assembly.field2;
@@ -90,7 +90,7 @@ public class Assembler {
             assembly.address = address;
             address++;
 
-            if (!assembly.label.isEmpty() && !assembly.instruction.equals("halt")) {
+            if (!assembly.label.isEmpty()) {
                 if (!assignment.containsKey(assembly.label)) {
                     if (assembly.instruction.equals(".fill")) {
 
@@ -101,14 +101,14 @@ public class Assembler {
 
                             assignment.put(assembly.label, addresses.get(assembly.field0));
 
-                        } else throw new SyntaxError("label unidentified");
+                        } else throw new SyntaxError("address unidentified");
                     }
                     addresses.put(assembly.label, String.valueOf(assembly.address));
                 } else throw new SyntaxError("duplicate label");
             }
         }
-//        System.out.println(assignment.toString());
-//        System.out.println(addresses.toString());
+        //System.out.println("Var: " + assignment.toString());
+        //System.out.println("Address: " + addresses.toString());
     }
 
     public static void AssemblyToMachineCode(String inputPath, String OutputPath) {
@@ -118,13 +118,13 @@ public class Assembler {
             List<Assembly> assemblyCode = new ArrayList<>();
             for (String c : code) {
                 Assembly map = AssemblerMapping.mapAssembly(c);
-              //  map.printInstruction();
+                //  map.printInstruction();
                 assemblyCode.add(map);
             }
             List<String> decimalAssembly = new Assembler(assemblyCode).toMachineCode();
             r.write(OutputPath, decimalAssembly);
             System.out.println("exit(0)");
-        } catch (SyntaxError e) {
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
 
