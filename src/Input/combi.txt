@@ -1,0 +1,44 @@
+        lw   0 1 n
+        lw   0 2 r
+        lw   0 5 stk
+        lw   0 6 neg1
+        lw   0 4 caddr
+        jalr 4 7
+        halt
+comb    beq  2 0 base
+        nand 2 2 4
+        add  4 1 4
+        beq  4 6 base
+        add  1 6 1
+        lw   0 4 pos4
+        add  5 4 5
+        sw   5 7 -4
+        sw   5 1 -3
+        sw   5 2 -2
+        lw   0 4 caddr
+        jalr 4 7
+        sw   5 3 -1
+        lw   5 1 -3
+        lw   5 2 -2
+        add  2 6 2
+        lw   0 4 caddr
+        jalr 4 7
+        lw   5 4 -1
+        add  3 4 3
+        lw   5 7 -4
+        lw   0 4 neg4
+        add  5 4 5
+        jalr 7 4
+base    lw   0 3 pos1
+        jalr 7 4
+n       .fill 7
+r       .fill 3
+neg1    .fill -1
+pos1    .fill 1
+pos4    .fill 4
+neg4    .fill -4
+caddr   .fill comb
+stk     .fill stack
+stack   .fill 0
+        .fill 0
+        .fill 0
