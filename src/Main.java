@@ -5,7 +5,8 @@ import Simulator.Simulator;
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 void main() {
 
-   Assembler.AssemblyToMachineCode("src/Input/Test1.txt","src/Output/outtest.txt");
+    Assembler.AssemblyToMachineCode("src/Input/Test1.txt","src/Output/outtest.txt");
     Assembler.AssemblyToMachineCode("src/Input/Mul_test.txt","src/Output/Mul_Out.txt");
-    Simulator.simulate("src/Input/Simulator_input.txt");
+    Assembler.AssemblyToMachineCode("src/Input/combi.txt","src/Output/combi_out.txt");
+    Simulator.simulate("src/Output/combi_out.txt");
 }
