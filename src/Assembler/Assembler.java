@@ -110,7 +110,7 @@ public class Assembler {
 
 
 
-         System.out.println("Address: " + addresses.toString());
+       //  System.out.println("Address: " + addresses.toString());
     }
 
     public static void AssemblyToMachineCode(String inputPath, String OutputPath) {
