@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.List;
 
 public class Simulator {
 
@@ -61,13 +62,39 @@ public class Simulator {
         }
     }
 
-    public static void simulate(String filePath) {
-        StateType state = new StateType();
-        loadMachineCode(state, filePath);
-        runSimulation(state);
+    public static void loadMachineCode(StateType state, List<String> machineCodes) {
+        state.numMemory = 0;
+        for (String line : machineCodes) {
+            line = line.trim();
+            if (line.isEmpty()) {
+                continue;
+            }
+            try {
+                int val = Integer.parseInt(line);
+                state.mem[state.numMemory] = val;
+                System.out.printf("memory[%d]=%d\n", state.numMemory, state.mem[state.numMemory]);
+                state.numMemory++;
+            } catch (NumberFormatException e) {
+                System.err.printf("error in reading address %d\n", state.numMemory);
+                System.exit(1);
+            }
+        }
+        System.out.printf("\n");
     }
 
-    public static void runSimulation(StateType state) {
+    public static StateType simulate(String filePath) {
+        StateType state = new StateType();
+        loadMachineCode(state, filePath);
+        return runSimulation(state);
+    }
+
+    public static StateType simulate(List<String> machineCodes) {
+        StateType state = new StateType();
+        loadMachineCode(state, machineCodes);
+        return runSimulation(state);
+    }
+
+    public static StateType runSimulation(StateType state) {
         int instructionsExecuted = 0;
         boolean halted = false;
 
@@ -158,13 +185,15 @@ public class Simulator {
         System.out.printf("final state of machine:\n");
 
         printState(state);
+
+        return state;
     }
 
     public static void main(String[] args) {
         if (args.length > 0) {
             simulate(args[0]);
         } else {
-            simulate("src/Input/ExSimulator_input.txt");
+            simulate("src/Input/Simulator_input.txt");
         }
     }
 }
