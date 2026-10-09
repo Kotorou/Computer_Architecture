@@ -69,7 +69,7 @@ public class Assembler {
                     } else
                         throw new SyntaxError("label unidentified");
                 } else {
-
+                    Validator.numberValidate(assembly.field2);
                     field2 = assembly.field2;
                 }
 
