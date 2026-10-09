@@ -58,7 +58,7 @@ public class Assembler {
 
             } else if (Objects.equals(Instruction.type(assembly.instruction), "I")) {
                 String field2 = "";
-                if (!assembly.field2.matches("(-*[1-9]+\\d*)|(0)")) {
+                if (!assembly.field2.matches("-?(0|[1-9]\\d*)")) {
                     if (addresses.containsKey(assembly.field2)) {
                         if (assembly.instruction.equals("beq")) {
                             field2 = String.valueOf(Integer.parseInt(addresses.get(assembly.field2)) - assembly.address - 1);
@@ -86,27 +86,38 @@ public class Assembler {
 
     private void assign() throws SyntaxError {
         int address = 0;
+        //assign address
         for (Assembly assembly : assembles) {
             assembly.address = address;
             address++;
 
             if (!assembly.label.isEmpty()) {
-                if (!assignment.containsKey(assembly.label)) {
-                    if (assembly.instruction.equals(".fill")) {
-
-                        if (assembly.field0.matches("(-*[1-9]+\\d*)|-*(0)")) {
-                            Validator.numberValidate(assembly.field0);
-                            assignment.put(assembly.label, assembly.field0);
-                        } else if (addresses.containsKey(assembly.field0)) {
-
-                            assignment.put(assembly.label, addresses.get(assembly.field0));
-
-                        } else throw new SyntaxError("address unidentified");
-                    }
+                if (!addresses.containsKey(assembly.label)) {
                     addresses.put(assembly.label, String.valueOf(assembly.address));
                 } else throw new SyntaxError("duplicate label");
             }
         }
+        //assign parameter
+        for (Assembly assembly : assembles) {
+            if (!assembly.label.isEmpty()) {
+                if (!assignment.containsKey(assembly.label)) {
+                    if (assembly.instruction.equals(".fill")) {
+
+                        if (assembly.field0.matches("-?(0|[1-9]\\d*)")) {
+                            Validator.numberValidate(assembly.field0);
+                            assignment.put(assembly.label, assembly.field0);
+                        } else if (addresses.containsKey(assembly.field0)) {
+                            assignment.put(assembly.label, addresses.get(assembly.field0));
+                        } else throw new SyntaxError("address unidentified");
+                    }
+
+                } else throw new SyntaxError("duplicate label");
+            }
+        }
+
+
+
+
         //System.out.println("Var: " + assignment.toString());
         //System.out.println("Address: " + addresses.toString());
     }
