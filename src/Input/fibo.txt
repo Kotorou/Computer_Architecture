@@ -1,0 +1,15 @@
+	 lw 0 1 fn // fn =F(n)
+	 lw 0 2 fnn // fnn = fn next = F(n+1)
+	 lw 0 3 round
+	 lw 0 4 neg
+loop beq 3 0 done //round remain = 0 -> done
+     add 1 2 5  // F(n+2) = F(n) + F(n+1)
+	 add 2 0 1 // fn = fnn + 0      เลื่อนตำแหน่ง
+	 add 5 0 2 // fnn  = res(reg 5) + 0    เลื่อนตำแหน่ง
+	 add 3 4 3 // round = round - 1
+	 beq 0 0 loop
+done halt
+round .fill 10
+fn .fill 0
+fnn .fill 1
+neg .fill -1
