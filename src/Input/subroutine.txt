@@ -1,0 +1,29 @@
+        lw      0       5       pos1        reg5 = 1
+        lw      0       1       input       reg1 = mem[input]
+        lw      0       2       subAdr      reg2 = address of sub4n
+        jalr    2       4                   call sub4n, reg4 = return address, reg3 = answer
+        lw      0       5       pos1        reg5 = 1
+        lw      0       1       input       reg1 = mem[input]
+        lw      0       2       subAdr      reg2 = address of sub4n
+        jalr    2       4                   call sub4n again
+done    halt
+sub4n   sw      7       4       stack       push return address
+        add     7       5       7           sp = sp + 1
+        sw      7       1       stack       push reg1
+        add     7       5       7           sp = sp + 1
+        add     1       1       1           reg1 = 2 * input
+        add     1       1       3           reg3 = 4 * input
+        lw      0       2       neg1        reg2 = -1
+        add     7       2       7           sp = sp - 1
+        lw      7       1       stack       pop reg1
+        add     7       2       7           sp = sp - 1
+        lw      7       4       stack       pop return address
+        jalr    4       2                   return (reg2 is overwritten)
+pos1    .fill   1
+neg1    .fill   -1
+subAdr  .fill   sub4n                       address of sub4n
+input   .fill   10
+stack   .fill   0                           stack grows toward higher addresses
+        .fill   0
+        .fill   0
+        .fill   0

@@ -5,8 +5,16 @@ import Simulator.Simulator;
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 void main() {
 
-    Assembler.AssemblyToMachineCode("src/Input/Test1.txt","src/Output/outtest2.txt");
-    Assembler.AssemblyToMachineCode("src/Input/Mul_test.txt","src/Output/Mul_Out2.txt");
-    Assembler.AssemblyToMachineCode("src/Input/combi.txt","src/Output/combi_out2.txt");
-   // Simulator.simulate("src/Output/combi_out.txt");
+    //Assembler.AssemblyToMachineCode("src/Input/Test1.txt","src/Output/outtest.txt");
+    //Assembler.AssemblyToMachineCode("src/Input/multi.txt","src/Output/Mul_Out.txt");
+    //Assembler.AssemblyToMachineCode("src/Input/count.txt","src/Output/countOut.txt");
+    //Assembler.AssemblyToMachineCode("src/Input/subroutine.txt","src/Output/subroutineOut.txt");
+    //Assembler.AssemblyToMachineCode("src/Input/combi.txt","src/Output/combi_out.txt");
+    Assembler.AssemblyToMachineCode("src/Input/fibo.txt","src/Output/fiboOut.txt");
+    //Simulator.simulate("src/Output/outtest.txt");
+    //Simulator.simulate("src/Output/Mul_Out.txt");
+    //Simulator.simulate("src/Output/countOut.txt");
+    //Simulator.simulate("src/Output/subroutineOut.txt");
+    //Simulator.simulate("src/Output/combi_out.txt");
+    Simulator.simulate("src/Output/fiboOut.txt");
 }
