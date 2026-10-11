@@ -26,9 +26,14 @@ public class Assembler {
         for (Assembly assembly : assembles) {
 
             if (assembly.instruction.equals(".fill")) {
+                if (assembly.field0.matches("-?(0|[1-9]\\d*)")) {
+                    Validator.fillValidate(assembly.field0);
+                    machineCode.add(assembly.field0);
+                }else
                 if (addresses.containsKey(assembly.field0)) {
                     machineCode.add(addresses.get(assembly.field0));
-                } else machineCode.add(assembly.field0);
+                } else
+                    throw new SyntaxError("address unidentified");
                 continue;
             }
 
@@ -64,18 +69,16 @@ public class Assembler {
                     String field2 = "";
                     if (!assembly.field2.matches("-?(0|[1-9]\\d*)")) {
                         if (addresses.containsKey(assembly.field2)) {
-                            if (assembly.instruction.equals("beq")) {
-                                field2 = String.valueOf(Integer.parseInt(addresses.get(assembly.field2)) - assembly.address - 1);
-
-                            } else {
-                                field2 = addresses.get(assembly.field2);
-                            }
+                            field2 = assembly.instruction.equals("beq") ? String.valueOf(Integer.parseInt(addresses.get(assembly.field2)) - assembly.address - 1) :
+                                    addresses.get(assembly.field2);
                         } else
                             throw new SyntaxError("label unidentified");
                     } else {
-                        Validator.numberValidate(assembly.field2);
+
                         field2 = assembly.field2;
                     }
+
+                    Validator.numberValidate(field2);
                     destReg = BinaryTool.signExtension(BinaryTool.twoCompliment(field2), 16);
                     binaryMC = opcode + regA + regB + destReg;
                     break;
@@ -108,14 +111,13 @@ public class Assembler {
         }
 
 
-
-
         //  System.out.println("Address: " + addresses.toString());
     }
 
     public static void AssemblyToMachineCode(String inputPath, String OutputPath) {
-        ReaderAndWrite r = new ReaderAndWrite();
+
         try {
+            ReaderAndWrite r = new ReaderAndWrite();
             List<String> code = r.read(inputPath);
             List<Assembly> assemblyCode = new ArrayList<>();
             for (String c : code) {

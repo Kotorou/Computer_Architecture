@@ -24,7 +24,7 @@ public class AssemblerMapping {
             mapped_Assembly.instruction = second;
             rawAssembly.consume();
         } else throw new SyntaxError("instruction not found");
-        if (second.equals("halt")) return mapped_Assembly;
+        if (second.equals("halt")||second.equals("noop")) return mapped_Assembly;
         String third = rawAssembly.consume();
         if (second.equals(".fill")) {
             mapped_Assembly.field0 = third;

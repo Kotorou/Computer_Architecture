@@ -4,9 +4,7 @@ package Assembler;
 import Exceptions.SyntaxError;
 
 import java.util.NoSuchElementException;
-import java.util.Set;
 
-import static java.lang.Character.isDigit;
 
 public class AssemblyTokenizer implements Tokenizer{
 

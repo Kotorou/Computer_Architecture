@@ -8,8 +8,20 @@ public class Validator {
     }
 
     static public void numberValidate(String number) throws SyntaxError {
-        if (!number.matches("(-*[1-9]+\\d*)|(0)")) throw new SyntaxError("NAN");
-        int val = Integer.parseInt(number);
-        if (val < -32768 || val > 32767) throw new SyntaxError("number out of range");
+        if (!number.matches("-?(0|[1-9]\\d*)")) throw new SyntaxError("NAN");
+        try {
+            int val = Integer.parseInt(number);
+            if (val < -32768 || val > 32767) throw new SyntaxError("number out of range");
+        } catch (NumberFormatException e) {
+            throw new SyntaxError("number out of range");
+        }
+    }
+    static public void fillValidate(String number) throws SyntaxError {
+        if (!number.matches("-?(0|[1-9]\\d*)")) throw new SyntaxError("NAN");
+        try {
+            Integer.parseInt(number);
+        } catch (NumberFormatException e) {
+            throw new SyntaxError("number out of range");
+        }
     }
 }
