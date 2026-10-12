@@ -1,0 +1,2 @@
+AunnySum    noop
+AunnySum    halt
