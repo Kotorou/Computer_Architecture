@@ -1,44 +1,45 @@
-         lw   0 1 n
-         lw   0 2 r
-         lw   0 5 stk
-         lw   0 6 neg1
-         lw   0 4 caddr
-         jalr 4 7 call
-         halt
- comb    beq  2 0 base
-         nand 2 2 4
-         add  4 1 4
-         beq  4 6 base
-         add  1 6 1
-         lw   0 4 pos4
-         add  5 4 5
-         sw   5 7 -4
-         sw   5 1 -3
-         sw   5 2 -2
-         lw   0 4 caddr
-         jalr 4 7 call
-         sw   5 3 -1
-         lw   5 1 -3
-         lw   5 2 -2
-         add  2 6 2
-         lw   0 4 caddr
-         jalr 4 7 call
-         lw   5 4 -1
-         add  3 4 3
-         lw   5 7 -4
-         lw   0 4 neg4
-         add  5 4 5
-         jalr 7 4 return
- base    lw   0 3 pos1
-         jalr 7 4 return
- n       .fill 6
- r       .fill 3
- neg1    .fill -1
- pos1    .fill 1
- pos4    .fill 4
- neg4    .fill -4
- caddr   .fill comb
- stk     .fill stack
- stack   .fill 0
-         .fill 0
-         .fill 0
+
+        lw   0 1 n // โหลดค่าจาก n (7) มาเก็บที่ reg1
+        lw   0 2 r // โหลดค่าจาก r (3) มาเก็บที่ reg2
+        lw   0 5 stk // โหลดตำแหน่งจาก Stack Pointer มาเก็บที่ reg5
+        lw   0 6 neg1 // โหลดค่าจาก neg1 (-1) มาเก็บที่ reg6
+        lw   0 4 caddr // โหลดตำแหน่ง comb จากตัวแปร caddr มาเก็บที่ reg4
+        jalr 4 7 call // กระโดดไปทำงานที่ address ของ reg4 และเก็บ Return Address ไว้ที่ reg7
+        halt // จบการทำงานของโปรแกรม
+comb    beq  2 0 base // ถ้า reg2 (ค่า r) มีค่าเท่ากับ 0 ให้กระโดดไปทำงานที่ base "if(r == 0)"
+        nand 2 2 4 // นำ reg2 มา nand กับตัวเอง เผื่อกลับ bit แล้วเก็บค่าไว้ใน reg4
+        add  4 1 4 // เอา reg4 + reg1 แล้วเก็บไว้ที่ reg4
+        beq  4 6 base // ถ้า reg4 เท่ากับ reg6 (-1) ให้กระโดดไปทำงานที่ base "if(n == r)"
+        add  1 6 1 // เอา reg1 บวกด้วย reg6 (-1) แล้วเก็บค่าไว้ใน reg1 "n-1"
+        lw   0 4 pos4 // โหลดค่าจาก pos4 (4) เข้า reg4
+        add  5 4 5 // เลื่อน Stack Pointer (reg5) ขยับไป 4 ช่อง จองพื่นที่หน่วยความจำ
+        sw   5 7 -4 // เก็บ Return Address (reg7) ลง Stack
+        sw   5 1 -3 // เก็บค่า reg1 (n-1) ลง Stack
+        sw   5 2 -2 // เก็บค่า reg2 (r) ลง Stack
+        lw   0 4 caddr // โหลดตำแหน่ง comb จากตัวแปร caddr มาเก็บที่ reg4 ใหม่
+        jalr 4 7 call // กระโดดไปทำงานที่ address ของ reg4 และเก็บ Return Address ไว้ที่ reg7 เพื่อหา C(n-1,r) "recursive"
+        sw   5 3 -1 // เก็บค่า reg3 จาก jalr C(n-1,r) ลง Stack
+        lw   5 1 -3 // โหลดค่าจาก Stack (n-1) เข้า reg1
+        lw   5 2 -2// โหลดค่าจาก Stack (r) เข้า reg2
+        add  2 6 2 // เอา reg2 บวก reg6 (-1) คำนวณ (r - 1) แล้วเก็บที่ reg2
+        lw   0 4 caddr // โหลดตำแหน่งของ comb ลง reg4
+        jalr 4 7 call // กระโดดไปทำงานที่ address ของ reg4 และเก็บ Return Address ไว้ที่ reg7 เพื่อหา C(n-1,r - 1) "recursive"
+        lw   5 4 -1 // ดึงผลลัพธ์จากการ jalr C(n-1,r) ขึ้นมาจาก Stack ใส่ใน reg4
+        add  3 4 3 // นำผลลัพธ์จาก reg3 กับ reg4 มาบวกกัน แล้วเก็บไว้ใน reg3
+        lw   5 7 -4 // ดึง Return Address เดิมกลับมาจาก Stack ใส่ reg7
+        lw   0 4 neg4 // โหลดค่า neg4 (-4) ลง reg4
+        add  5 4 5 // เลื่อน Stack Pointer (reg5) กลับคืน 4 ช่อง คืนพื้นที่ Stack
+        jalr 7 4 return // กระโดดกลับ Return (halt)
+base    lw   0 3 pos1 // โหลดค่าจาก pos1 (1) ลง reg3
+        jalr 7 4 return // กระโดดกลับ Return (halt)
+n       .fill 7 // เก็บ 7 ไว้ที่ตัวแปร n
+r       .fill 3 // เก็บ 3 ไว้ที่ตัวแปร r
+neg1    .fill -1 // เก็บ -1 ไว้ที่ตัวแปร neg1
+pos1    .fill 1 // เก็บ 1 ไว้ที่ตัวแปร pos1
+pos1    .fill 4 // เก็บ 4 ไว้ที่ตัวแปร pos1
+neg4    .fill -4 // เก็บ -4 ไว้ที่ตัวแปร neg4
+caddr   .fill comb // เก็บ address ของบรรทัด comb มาที่ตัวแปร caddr
+stack   .fill 0 // จองพื้นที่หน่วยความจำสำหรับ Stack
+stk     .fill stack // เก็บ Address จุดเริ่มต้นของ Stack
+        .fill 0 // จองพื้นที่
+        .fill 0 // จองพื้นที่
