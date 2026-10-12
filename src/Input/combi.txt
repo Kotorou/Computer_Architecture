@@ -35,7 +35,7 @@ n       .fill 7 // เก็บ 7 ไว้ที่ตัวแปร n
 r       .fill 3 // เก็บ 3 ไว้ที่ตัวแปร r
 neg1    .fill -1 // เก็บ -1 ไว้ที่ตัวแปร neg1
 pos1    .fill 1 // เก็บ 1 ไว้ที่ตัวแปร pos1
-pos1    .fill 4 // เก็บ 4 ไว้ที่ตัวแปร pos1
+pos4    .fill 4 // เก็บ 4 ไว้ที่ตัวแปร pos1
 neg4    .fill -4 // เก็บ -4 ไว้ที่ตัวแปร neg4
 caddr   .fill comb // เก็บ address ของบรรทัด comb มาที่ตัวแปร caddr
 stack   .fill 0 // จองพื้นที่หน่วยความจำสำหรับ Stack
