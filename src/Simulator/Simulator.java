@@ -190,10 +190,6 @@ public class Simulator {
     }
 
     public static void main(String[] args) {
-        if (args.length > 0) {
-            simulate(args[0]);
-        } else {
-            simulate("src/Input/Simulator_input.txt");
-        }
+        simulate("src/Input/Simulator_input.txt");
     }
 }
