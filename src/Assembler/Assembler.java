@@ -128,8 +128,10 @@ public class Assembler {
             List<String> decimalAssembly = new Assembler(assemblyCode).toMachineCode();
             r.write(OutputPath, decimalAssembly);
             System.out.println("exit(0)");
+            System.exit(0);
         } catch (Exception e) {
             System.out.println(e.getMessage());
+            System.exit(1);
         }
 
 
